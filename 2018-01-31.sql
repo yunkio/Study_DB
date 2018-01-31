@@ -13,24 +13,24 @@ where employee_id not in (select manager_id
 select 
        case when employee_id not in (select manager_id
                                      from employees
-                                     where manager_id is not null) then '¸ÂÀ½' else '¾Æ´Ô' end as ¸·³»,
+                                     where manager_id is not null) then 'ë§ìŒ' else 'ì•„ë‹˜' end as ë§‰ë‚´,
        avg(salary)
 from employees
 group by case when employee_id not in (select manager_id
                                      from employees
-                                     where manager_id is not null) then '¸ÂÀ½' else '¾Æ´Ô' end
+                                     where manager_id is not null) then 'ë§ìŒ' else 'ì•„ë‹˜' end
 ;
 
------- ¸·³» ³¢¸®ÀÇ Æò±Õ¿¬ºÀ, ¸·³»°¡ ¾Æ´Ñ ³ğµéÀÇ Æò±Õ¿¬ºÀ
+------ ë§‰ë‚´ ë¼ë¦¬ì˜ í‰ê· ì—°ë´‰, ë§‰ë‚´ê°€ ì•„ë‹Œ ë†ˆë“¤ì˜ í‰ê· ì—°ë´‰
 
 
 
 ??
 
--- ºÎ»ç¼ö ¸Ó¸´¼ö¿¡ µû¸¥ Æò±Õ ¿¬ºÀ?
+-- ë¶€ì‚¬ìˆ˜ ë¨¸ë¦¿ìˆ˜ì— ë”°ë¥¸ í‰ê·  ì—°ë´‰?
 
 
---------------------8Àå--------------------
+--------------------8ì¥--------------------
 -------------------------------------------
 
 
@@ -51,19 +51,19 @@ insert into set_b values(9);
 commit;
 select a,b from set_a full join set_b on a=b;
 
-select b as ÇÕÁıÇÕ from set_b
+select b as í•©ì§‘í•© from set_b
 union
 select a from set_a;
-select b as ÇÕÁıÇÕ from set_b
+select b as í•©ì§‘í•© from set_b
 union all
 select a from set_a;
--- unionÀº Áßº¹À» Á¦°ÅÇÏÁö ¾ÊÀ½, union allÀº Á¦°ÅÇÔ
--- º°´Ù¸¥ °úÁ¤ÀÌ ÇÊ¿äÇÏÁö ¾Ê¾Æ union allÀÌ ´õ ºü¸§(Áßº¹µÇÁö ¾Ê¾Ò°Å³ª »ó°üÀÌ ¾øÀ» °æ¿ì)
-select a as ±³ÁıÇÕ from set_a
+-- unionì€ ì¤‘ë³µì„ ì œê±°í•˜ì§€ ì•ŠìŒ, union allì€ ì œê±°í•¨
+-- ë³„ë‹¤ë¥¸ ê³¼ì •ì´ í•„ìš”í•˜ì§€ ì•Šì•„ union allì´ ë” ë¹ ë¦„(ì¤‘ë³µë˜ì§€ ì•Šì•˜ê±°ë‚˜ ìƒê´€ì´ ì—†ì„ ê²½ìš°)
+select a as êµì§‘í•© from set_a
 intersect
 select b from set_b;
 
-select a as Â÷ÁıÇÕ from set_a
+select a as ì°¨ì§‘í•© from set_a
 minus
 select b from set_b;
 
@@ -76,7 +76,7 @@ select null, last_name from employees where department_id=50;
 --------------------------------------------
 insert into departments(department_id, department_name, manager_id, location_id)
 values (70, 'Public Relations', 100, 1700);
--- µ¥ÀÌÅÍ¸¦ ¸ğµÎ Ã¤¿üÀ» °æ¿ì column °ª »ı·«°¡´É, ´Ü ¾È ÁÁÀº ¹æ¹ıÀÓ (tableÀÇ ÇüÅÂ´Â ¹Ù²ğ ¼ö ¹Û¿¡ ¾øÀ½)
+-- ë°ì´í„°ë¥¼ ëª¨ë‘ ì±„ì› ì„ ê²½ìš° column ê°’ ìƒëµê°€ëŠ¥, ë‹¨ ì•ˆ ì¢‹ì€ ë°©ë²•ì„ (tableì˜ í˜•íƒœëŠ” ë°”ë€” ìˆ˜ ë°–ì— ì—†ìŒ)
 select * from departments;
 
 
@@ -134,7 +134,7 @@ as
 select last_name as name, salary, department_id
 from employees
 where 1<>1;
---ºóÅ×ÀÌºí
+--ë¹ˆí…Œì´ë¸”
 
 create table sales_reps
 as
@@ -146,7 +146,7 @@ INSERT INTO sales_reps(id, name, salary, commission_pct)
 SELECT employee_id, last_name, salary, commission_pct
 FROM employees
 WHERE job_id LIKE '%REP%';
--- values »ç¿ëÇÏ¸é ¾È µÊ
+-- values ì‚¬ìš©í•˜ë©´ ì•ˆ ë¨
 select * from sales_reps;
 
 UPDATE employees
@@ -188,9 +188,9 @@ WHERE           department_id =
                                 LIKE '%Public%')
 ;
 
--------------Æ®·£Àè¼Ç-------------
---Æ®·£Àè¼Ç = ÃÖ¼Ò¾÷¹«´ÜÀ§(TX)
---¹­´Â °ÍÀ» µ¿±âÈ­Ã³¸®¶ó°í ÇÔ
+-------------íŠ¸ëœì­ì…˜-------------
+--íŠ¸ëœì­ì…˜ = ìµœì†Œì—…ë¬´ë‹¨ìœ„(TX)
+--ë¬¶ëŠ” ê²ƒì„ ë™ê¸°í™”ì²˜ë¦¬ë¼ê³  í•¨
 
 --TX1
 update employees set salary = salary * 1.1 where last_name = 'Vargas';
@@ -200,13 +200,13 @@ savepoint b;
 update employees set salary=salary*0.5 where last_name = 'Vargas';
 savepoint c;
 rollback to b;
---- commit È¤Àº rollbackÀ» ÇÒ °æ¿ì ÀúÀåÁ¡Àº ´Ù ¾ø¾îÁü, ·Ñ¹é to * ÇÒ°æ¿ì ±× ÈÄÀÇ ÀúÀåÁ¡ÀÌ ¾ø¾îÁü
+--- commit í˜¹ì€ rollbackì„ í•  ê²½ìš° ì €ì¥ì ì€ ë‹¤ ì—†ì–´ì§, ë¡¤ë°± to * í• ê²½ìš° ê·¸ í›„ì˜ ì €ì¥ì ì´ ì—†ì–´ì§
 rollback;
 
 
 
 --------------------------------------------------
----------------chapter3 ¿¬½À¹®Á¦------------------
+---------------chapter3 ì—°ìŠµë¬¸ì œ------------------
 --------------------------------------------------
 
 --(1)
@@ -285,3 +285,7 @@ loc VARCHAR2(13),
 create_date DATE DEFAULT SYSDATE);
 desc dept;d
 
+select * from tab;
+select * from user_tables;
+select * from user_constraints;
+select * from user_indexes;
